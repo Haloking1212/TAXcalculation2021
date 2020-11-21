@@ -1,0 +1,169 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class estimation {
+
+    public static char status;
+    public static String maritalStatus;
+
+
+    public static String filingMethod;
+
+    public static double income;
+    public static double taxRate10 = 0.1, taxRate12 = 0.12, taxRate22 = 0.22, taxRate24 = 0.24,taxRate32 = 0.32,taxRate35 = 0.35,taxRate37 = 0.37;
+
+
+    public static void main (String[] args){
+
+        maritalStatus();
+
+
+
+        anualIncome();
+
+        System.out.println("Last Anual Income: " + income);
+        System.out.println("Marital Status: " + maritalStatus);
+        System.out.println("Filing method: " + filingMethod);
+
+        System.out.println("Tax value: " + taxSingleCalculation());
+
+        localTimeAndDate();
+
+    }
+
+    public static void maritalStatus () {
+
+        Scanner input = new Scanner(System.in);
+
+        //loop to check yes or no answer
+        while (status != 'y'){
+            System.out.println("Are you Single? (Y/N):");
+            status = input.next().charAt(0);
+
+            //stop loop if return value is n
+            if (status == 'n'){
+                break;
+            }
+                }
+
+                    //Assigning values to the var maritalStatus
+                    if (status == 'y') {
+                        maritalStatus = "Single";
+                    }
+                    else{
+                       maritalStatus = "Married";
+                    }
+
+                    //Call method if user declare that he/she is married
+                        if (status == 'n'){
+                            filingMethodOption();
+                        }
+
+        }
+
+        public static void filingMethodOption (){
+
+        char filingOption = 0;
+
+            Scanner input = new Scanner(System.in);
+
+            while (filingOption != 'y') {
+
+                System.out.println("Are you filing jointly \n(Y/N):");
+                filingOption = input.next().charAt(0);
+
+                if (filingOption == 'n') {
+
+                    break;
+
+                }
+            }
+
+            if (filingOption == 'y') {
+
+                filingMethod = "Jointly";
+            }
+            else{
+
+                filingMethod = "Individually";
+
+            }
+
+        }
+
+
+    public static int anualIncome(){
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Type your last year income: ");
+        income = input.nextInt();
+          return 0;
+    }
+
+    public static double taxSingleCalculation (){
+
+    double taxbracket1 = 0, taxbracket2 = 0, taxbracket3 = 0, taxbracket4 = 0, taxbracket5 = 0, taxbracket6 = 0,taxbracket7 = 0;
+
+        if (income <=9950) {
+            taxbracket1 = income * taxRate10;
+        }
+        else{
+            taxbracket1 = 9950*taxRate10;
+        }
+
+
+        if (income >=9951 && income <=40525) {
+            taxbracket2 = (income-9950)*taxRate12;
+        }
+        else if (income > 40525){
+            taxbracket2 = 30575*taxRate12;
+        }
+
+
+        if (income >=40526 && income <=86375) {
+            taxbracket3 = (income-40525)*taxRate22;
+        }
+        else if(income > 86375){
+            taxbracket3 = 45850*taxRate22;
+        }
+
+        if (income >=86376 && income <=164925) {
+            taxbracket4 = (income-86376)*taxRate24;
+        }
+        else if(income > 164925){
+            taxbracket4 = 78549*taxRate24;
+        }
+
+        if (income >=164926 && income <=209425) {
+            taxbracket5 = (income-164926)*taxRate32;
+        }
+        else if(income > 209425){
+            taxbracket5 = 44500*taxRate32;
+        }
+
+        if (income >=209426 && income <=523600) {
+            taxbracket6 = (income-209426)*taxRate35;
+        }
+        else if(income > 523600){
+            taxbracket6 = 314175*taxRate35;
+        }
+
+        if (income >=523601) {
+            taxbracket7 = (income-523601)*taxRate37;
+        }
+
+
+    double totaltax = taxbracket1+taxbracket2+taxbracket3+taxbracket4+taxbracket5+taxbracket6+taxbracket7;
+
+    return totaltax;
+
+    }
+
+public static void localTimeAndDate (){
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("\nTax report updated in " + dtf.format(now));
+
